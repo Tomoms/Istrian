@@ -1,21 +1,29 @@
 package org.istrian;
 
-import org.mapdb.DB;
-import org.mapdb.DBMaker;
+import com.beust.jcommander.JCommander;
+import org.istrian.command.BalanceCommand;
+import org.istrian.command.Command;
+import org.istrian.command.NewCommand;
 
-import java.io.File;
-import java.util.NavigableSet;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        String istrianFolder = System.getProperty("user.home") + "/.istrian";
-        new File(istrianFolder).mkdirs();
-        DB db = DBMaker.fileDB(istrianFolder + "/istrianSet.db").make();
-        DB.TreeSetMaker<Entry> treeSetMaker = new DB.TreeSetMaker<>(db, "istrianSet");
-        NavigableSet<Entry> set = treeSetMaker.createOrOpen();
+        IstrianInstance instance = IstrianInstance.getInstance();
 
-        db.close();
+        List<Command> commandList = List.of(
+                new NewCommand(),
+                new BalanceCommand()
+        );
+        final JCommander.Builder builder = JCommander.newBuilder();
+        commandList.forEach(command -> builder.addCommand(command.getName(), command));
+        JCommander jc = builder.build();
+
+        jc.parse(args);
+        commandList.stream().filter(command -> command.getName().equals(args[0])).forEach(Command::execute);
+
+        instance.destroy();
     }
 
 }
