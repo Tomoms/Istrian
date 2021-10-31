@@ -11,8 +11,6 @@ import java.util.NavigableSet;
 @Parameters(commandDescription = "Add a new entry to the database")
 public class NewCommand implements Command {
 
-    private static final String NAME = "name";
-
     @Parameter(names = { "-a", "--amount" })
     private double amount;
 
@@ -32,7 +30,7 @@ public class NewCommand implements Command {
 
     @Override
     public String getName() {
-        return NAME;
+        return "new";
     }
 
 }
