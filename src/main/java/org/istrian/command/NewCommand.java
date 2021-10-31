@@ -21,8 +21,8 @@ public class NewCommand implements Command {
     public void execute() {
         final IstrianInstance instance = IstrianInstance.getInstance();
         NavigableSet<Entry> set = instance.getSet();
-        int nextId = set.last().getId() + 1;
-        set.add(new Entry(nextId,
+        int lastId = set.size() == 0 ? 0 : set.last().getId();
+        set.add(new Entry(lastId + 1,
                 amount < 0 ? EntryType.OUTFLOW : EntryType.INCOME,
                 Math.abs(amount),
                 description));
