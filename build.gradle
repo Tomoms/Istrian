@@ -1,9 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'org.istrian'
 version '1.0'
+
+application {
+    mainClass = 'org.istrian.Main'
+}
 
 repositories {
     mavenCentral()
