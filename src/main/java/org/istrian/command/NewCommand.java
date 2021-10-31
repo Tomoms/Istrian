@@ -11,12 +11,15 @@ import java.util.NavigableSet;
 @Parameters(commandDescription = "Add a new entry to the database")
 public class NewCommand implements Command {
 
+    private static final String NAME = "name";
+
     @Parameter(names = { "-a", "--amount" })
     private double amount;
 
     @Parameter(names = { "-d", "--description" })
     private String description;
 
+    @Override
     public void execute() {
         final IstrianInstance instance = IstrianInstance.getInstance();
         NavigableSet<Entry> set = instance.getSet();
@@ -25,6 +28,11 @@ public class NewCommand implements Command {
                 amount < 0 ? EntryType.OUTFLOW : EntryType.INCOME,
                 Math.abs(amount),
                 description));
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
 }
