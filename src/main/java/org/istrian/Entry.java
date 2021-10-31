@@ -30,6 +30,10 @@ public class Entry implements Serializable, Comparable<Entry> {
         return amount;
     }
 
+    public double getSignedAmount() {
+        return amount * type.getMultiplier();
+    }
+
     public String getDescription() {
         return description;
     }
